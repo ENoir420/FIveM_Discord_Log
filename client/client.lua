@@ -370,6 +370,6 @@ end
 
 function ShowDebug(text)
 	SetNotificationTextEntry("STRING")
-	AddTextComponentSubstringPlayerName("~b~JD_logs Debug:~s~\n"..text)
+	AddTextComponentSubstringPlayerName("~bENoir_logs Debug:~s~\n"..text)
 	DrawNotification(true, true)
 end
