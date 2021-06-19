@@ -21,16 +21,16 @@ end
 
 
 exports('discord', function(message, id, id2, color, channel)
-	
+	-- checking if export is used correctly
 	local _message = message
 	
-	if message == nil then print("^1Error: ENoir_Logs Export. Invalid message.^0") return end
-	if id == nil or id == "PLAYER_ID" or not tonumber(id) then print("^1Error: ENoir_Logs Export. Invalid player id.^0") return end
-	if id == nil or id2 == "PLAYER_2_ID" or not tonumber(id2) then print("^1Error: ENoir_Logs Export. Invalid second player id.^0") return end
-	if color == nil then print("^1Error: ENoir_Logs Export. Invalid color.^0") return end
-	if channel == nil or channel == "" then print("^1Error: ENoir_Logs Export. Invalid channel.^0") return end
+	if message == nil then print("^1Error: ENoir Export. Invalid message.^0") return end
+	if id == nil or id == "PLAYER_ID" or not tonumber(id) then print("^1Error: ENoir Export. Invalid player id.^0") return end
+	if id == nil or id2 == "PLAYER_2_ID" or not tonumber(id2) then print("^1Error: Enoir Export. Invalid second player id.^0") return end
+	if color == nil then print("^1Error: ENoir Export. Invalid color.^0") return end
+	if channel == nil or channel == "" then print("^1Error: ENoir Export. Invalid channel.^0") return end
 
-	
+	-- Check if hex or decimal color is used
 	if string.find(color,"#") then _color = tonumber(color:gsub("#",""),16) else _color = color end
 
 	if id2 ~= 0 then
@@ -388,56 +388,57 @@ function PluginDualPlayerLogs(message, color, field1, field2, channel)
 	})
 end
 
+-- Event Handlers
 
-
+-- Send message when Player connects to the server.
 AddEventHandler("playerConnecting", function(name, setReason, deferrals)
-	SinglePlayerLogs('**' ..GetPlayerName(source).. '** si sta connettendo al server.', Config.BaseColors['Connessione'], source, 'Connessione')
+	SinglePlayerLogs('**' ..GetPlayerName(source).. '** si sta connettendo al server.', Config.BaseColors['log-in'], source, 'log-in')
 end)
 
-
+-- Send message when Player disconnects from the server
 AddEventHandler('playerDropped', function(reason)
-	SinglePlayerLogs('**' ..GetPlayerName(source).. '** ha quittato il server. (Reason: ' .. reason .. ')', Config.BaseColors['Disconnesso'], source, 'Disconnesso')
+	SinglePlayerLogs('**' ..GetPlayerName(source).. '** si è disconnesso. (Reason: ' .. reason .. ')', Config.BaseColors['log-out'], source, 'log-out')
 end)
 
-
+-- Send message when Player creates a chat message (Does not show commands)
 AddEventHandler('chatMessage', function(source, name, msg)
-	SinglePlayerLogs('**' .. sanitize(GetPlayerName(source)) .. '** ha scritto in chat `' .. msg..'`', Config.BaseColors['chat'], source, 'chat')
+	SinglePlayerLogs('**' .. sanitize(GetPlayerName(source)) .. '** ha scritto: `' .. msg..'`', Config.BaseColors['chat'], source, 'chat')
 end)
 
-
+-- Send message when Player died (including reason/killer check) (Not always working)
 RegisterServerEvent('playerDied')
 AddEventHandler('playerDied',function(id,player,killer,DeathReason, Weapon)
 	if Weapon == nil then _Weapon = "" else _Weapon = "`"..Weapon.."`" end
-	if id == 1 then  
-        SinglePlayerLogs('**' .. sanitize(GetPlayerName(source)) .. '** si è suicidato per colpa di '.._Weapon, Config.BaseColors['morte/suicidio'], source, 'morte/suicidio') 
-	elseif id == 2 then 
-		DualPlayerLogs('**' .. GetPlayerName(killer) .. '** è stato ucciso da ' .. GetPlayerName(source).. ' `('.._Weapon..')`', Config.BaseColors['morte/suicidio'], killer, source, 'morte/suicidio') 
-	else 
-        SinglePlayerLogs('**' .. GetPlayerName(source) .. '** `è morto per colpa di`', Config.BaseColors['morte/suicidio'], source, 'morte/suicidio') 
+	if id == 1 then  -- Suicide/died
+        SinglePlayerLogs('**' .. sanitize(GetPlayerName(source)) .. '** si è suicidato con '.._Weapon, Config.BaseColors['deaths'], source, 'deaths') -- sending to deaths channel
+	elseif id == 2 then -- Killed by other player
+		DualPlayerLogs('**' .. GetPlayerName(killer) .. '** è stato ucciso da ' .. GetPlayerName(source).. ' `('.._Weapon..')`', Config.BaseColors['deaths'], killer, source, 'deaths') -- sending to deaths channel
+	else -- When gets killed by something else
+        SinglePlayerLogs('**' .. GetPlayerName(source) .. '** è morto', Config.BaseColors['deaths'], source, 'deaths') -- sending to deaths channel
 	end
 end)
 
-
+-- Send message when Player fires a weapon
 RegisterServerEvent('playerShotWeapon')
 AddEventHandler('playerShotWeapon', function(weapon)
 	local info = GetPlayerDetails(source)
 	if Config.weaponLog then
-		SinglePlayerLogs('**' .. GetPlayerName(source)  .. '** ha sparato con `' .. weapon .. '`', Config.BaseColors['shooting'], source, 'shooting')
+		SinglePlayerLogs('**' .. GetPlayerName(source)  .. '** ha sparato con la seguente arma `' .. weapon .. '`', Config.BaseColors['shooting'], source, 'shooting')
     end
 end)
 
-
+-- Getting exports from clientside
 RegisterServerEvent('ClientDiscord')
 AddEventHandler('ClientDiscord', function(message, id, id2, color, channel)
 	local _message = message
 	
-	if message == nil then print("^1Error: ENoir_Logs Export. Invalid message.^0") return end
-	if id == nil or id == "PLAYER_ID" or not tonumber(id) then print("^1Error: ENoir_Logs Export. Invalid player id.^0") return end
-	if id == nil or id2 == "PLAYER_2_ID" or not tonumber(id2) then print("^1Error: ENoir_Logs Export. Invalid second player id.^0") return end
-	if color == nil then print("^1Error: ENoir_Logs Export. Invalid color.^0") return end
-	if channel == nil or channel == "" then print("^1Error: Enoir_Logs Export. Invalid channel.^0") return end
+	if message == nil then print("^1Error: JD_Logs Export. Invalid message.^0") return end
+	if id == nil or id == "PLAYER_ID" or not tonumber(id) then print("^1Error: JD_Logs Export. Invalid player id.^0") return end
+	if id == nil or id2 == "PLAYER_2_ID" or not tonumber(id2) then print("^1Error: JD_Logs Export. Invalid second player id.^0") return end
+	if color == nil then print("^1Error: JD_Logs Export. Invalid color.^0") return end
+	if channel == nil or channel == "" then print("^1Error: JD_Logs Export. Invalid channel.^0") return end
 
-	
+	-- Check if hex or decimal color is used
 	if string.find(color,"#") then _color = tonumber(color:gsub("#",""),16) else _color = color end
 
 	if id2 ~= 0 then
@@ -451,15 +452,15 @@ AddEventHandler('ClientDiscord', function(message, id, id2, color, channel)
 	end
 end)
 
-
+-- Send message when a resource is being stopped
 AddEventHandler('onResourceStop', function (resourceName)
-    HidePlayerDetails('**' .. resourceName .. '** è stata stoppata.', Config.BaseColors['resources'], 'resources')
+    HidePlayerDetails('** è stata stoppata la seguente risorsa ' .. resourceName .. '**', Config.BaseColors['resources'], 'resources')
 end)
 
-
+-- Send message when a resource is being started
 AddEventHandler('onResourceStart', function (resourceName)
     Wait(100)
-    HidePlayerDetails('**' .. resourceName .. '** è stata startata.', Config.BaseColors['resources'], 'resources')
+    HidePlayerDetails('** è stata startata la seguente risorsa ' .. resourceName .. '**', Config.BaseColors['resources'], 'resources')
 end)
 
 function GetPlayerDetails(src)
