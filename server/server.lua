@@ -24,11 +24,11 @@ exports('discord', function(message, id, id2, color, channel)
 	
 	local _message = message
 	
-	if message == nil then print("^1Error: JD_Logs Export. Invalid message.^0") return end
-	if id == nil or id == "PLAYER_ID" or not tonumber(id) then print("^1Error: JD_Logs Export. Invalid player id.^0") return end
-	if id == nil or id2 == "PLAYER_2_ID" or not tonumber(id2) then print("^1Error: JD_Logs Export. Invalid second player id.^0") return end
-	if color == nil then print("^1Error: JD_Logs Export. Invalid color.^0") return end
-	if channel == nil or channel == "" then print("^1Error: JD_Logs Export. Invalid channel.^0") return end
+	if message == nil then print("^1Error: Enoir Export. Invalid message.^0") return end
+	if id == nil or id == "PLAYER_ID" or not tonumber(id) then print("^1Error: ENoir Export. Invalid player id.^0") return end
+	if id == nil or id2 == "PLAYER_2_ID" or not tonumber(id2) then print("^1Error: ENoir Export. Invalid second player id.^0") return end
+	if color == nil then print("^1Error: ENoir Export. Invalid color.^0") return end
+	if channel == nil or channel == "" then print("^1Error: ENoir Export. Invalid channel.^0") return end
 
 	
 	if string.find(color,"#") then _color = tonumber(color:gsub("#",""),16) else _color = color end
@@ -412,33 +412,33 @@ AddEventHandler('playerDied',function(id,player,killer,DeathReason, Weapon)
 	if id == 1 then  -- Suicide/died
         SinglePlayerLogs('**' .. sanitize(GetPlayerName(source)) .. '** `'..DeathReason..'` '.._Weapon, Config.BaseColors['deaths'], source, 'deaths') -- sending to deaths channel
 	elseif id == 2 then -- Killed by other player
-		DualPlayerLogs('**' .. GetPlayerName(killer) .. '** '..DeathReason..' ' .. GetPlayerName(source).. ' `('.._Weapon..')`', Config.BaseColors['deaths'], killer, source, 'deaths') -- sending to deaths channel
+		DualPlayerLogs('**' .. GetPlayerName(killer) .. '** è stato ucciso da'..DeathReason..' ' .. GetPlayerName(source).. ' `('.._Weapon..')`', Config.BaseColors['deaths'], killer, source, 'deaths') 
 	else -- When gets killed by something else
         SinglePlayerLogs('**' .. GetPlayerName(source) .. '** `died`', Config.BaseColors['deaths'], source, 'deaths') -- sending to deaths channel
 	end
 end)
 
--- Send message when Player fires a weapon
+
 RegisterServerEvent('playerShotWeapon')
 AddEventHandler('playerShotWeapon', function(weapon)
 	local info = GetPlayerDetails(source)
 	if Config.weaponLog then
-		SinglePlayerLogs('**' .. GetPlayerName(source)  .. '** fired a `' .. weapon .. '`', Config.BaseColors['shooting'], source, 'shooting')
+		SinglePlayerLogs('**' .. GetPlayerName(source)  .. '** a sparato con `' .. weapon .. '`', Config.BaseColors['shooting'], source, 'shooting')
     end
 end)
 
--- Getting exports from clientside
+
 RegisterServerEvent('ClientDiscord')
 AddEventHandler('ClientDiscord', function(message, id, id2, color, channel)
 	local _message = message
 	
-	if message == nil then print("^1Error: JD_Logs Export. Invalid message.^0") return end
-	if id == nil or id == "PLAYER_ID" or not tonumber(id) then print("^1Error: JD_Logs Export. Invalid player id.^0") return end
-	if id == nil or id2 == "PLAYER_2_ID" or not tonumber(id2) then print("^1Error: JD_Logs Export. Invalid second player id.^0") return end
-	if color == nil then print("^1Error: JD_Logs Export. Invalid color.^0") return end
-	if channel == nil or channel == "" then print("^1Error: JD_Logs Export. Invalid channel.^0") return end
+	if message == nil then print("^1Error: ENoir Export. Invalid message.^0") return end
+	if id == nil or id == "PLAYER_ID" or not tonumber(id) then print("^1Error: ENoir Export. Invalid player id.^0") return end
+	if id == nil or id2 == "PLAYER_2_ID" or not tonumber(id2) then print("^1Error: ENoir Export. Invalid second player id.^0") return end
+	if color == nil then print("^1Error: ENoir Export. Invalid color.^0") return end
+	if channel == nil or channel == "" then print("^1Error: ENoir Export. Invalid channel.^0") return end
 
-	-- Check if hex or decimal color is used
+	
 	if string.find(color,"#") then _color = tonumber(color:gsub("#",""),16) else _color = color end
 
 	if id2 ~= 0 then
@@ -452,15 +452,15 @@ AddEventHandler('ClientDiscord', function(message, id, id2, color, channel)
 	end
 end)
 
--- Send message when a resource is being stopped
+
 AddEventHandler('onResourceStop', function (resourceName)
-    HidePlayerDetails('**' .. resourceName .. '** has been stopped.', Config.BaseColors['resources'], 'resources')
+    HidePlayerDetails('** è stata stoppata la seguente risorsa' '**' .. resourceName .. , Config.BaseColors['risorse server'], 'risorse server')
 end)
 
--- Send message when a resource is being started
+
 AddEventHandler('onResourceStart', function (resourceName)
     Wait(100)
-    HidePlayerDetails('**' .. resourceName .. '** has been started.', Config.BaseColors['resources'], 'resources')
+    HidePlayerDetails('** è stata startata la seguente risorsa' '**' .. resourceName .. , Config.BaseColors['risorse server'], 'risorse server')
 end)
 
 function GetPlayerDetails(src)
@@ -550,38 +550,3 @@ function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
 
--- version check
-Citizen.CreateThread( function()
-		SetConvarServerInfo("JD_logs", "V"..Config.versionCheck)
-		local vRaw = LoadResourceFile(GetCurrentResourceName(), 'version.json')
-		if vRaw and Config.versionCheck then
-			local v = json.decode(vRaw)
-			PerformHttpRequest(
-				'https://raw.githubusercontent.com/Prefech/JD_logs/master/version.json',
-				function(code, res, headers)
-					if code == 200 then
-						local rv = json.decode(res)
-						if rv.version ~= v.version then
-							print(
-								([[^1
-
--------------------------------------------------------
-JD_logs
-UPDATE: %s AVAILABLE
-CHANGELOG: %s
--------------------------------------------------------
-^0]]):format(
-									rv.version,
-									rv.changelog
-								)
-							)
-						end
-					else
-						print('JD_logs unable to check version')
-					end
-				end,
-				'GET'
-			)
-		end
-	end
-)
