@@ -2,9 +2,9 @@ Config = {}
 
 Config.AllLogs = true											-- Attiva/Disattiva i logs
 Config.postal = false  											-- se lo setti False, non apparirà il civico di spawn
-Config.username = "Phoenix Log" 							-- Bot Username
+Config.username = "Bot Name" 							-- Bot Username
 Config.avatar = "https://placeholder.com/"				-- Bot Avatar
-Config.communtiyName = "Phoenix RP"					-- Nome al top embed
+Config.communtiyName = "Community Name"					-- Nome al top embed
 Config.communtiyLogo = "https://placeholder.com/"		-- Icona al top embed
 Config.FooterText = "2021 ENoir_420"						-- Testo Footer per l' embed
 Config.FooterIcon = "https://placeholder.com/"			-- Icona Footer per l' embed
@@ -33,11 +33,11 @@ Config.BaseColors ={
 
 Config.webhooks = {		
 	all = "DISCORD_WEBHOOK",		-- Tutti i log in un unico canale
-	chat = "https://discord.com/api/webhooks/855611974058377228/xeXRIc7eexnm9Ys7lAdtsWdpANQ9Usg-6hloMK_8w92gTDjBY1T_ezjAnc4ydgdGcppc",		-- Chat Message
-	joins = "https://discord.com/api/webhooks/855786495168479262/0zguo2VU9oVToWdsgtTk2MyNfV3swDe_fSYZSwfC08ir48XN7yMxJuCSryIycQF-KEeN",		-- Log-in Player
-	leaving = "https://discord.com/api/webhooks/855786495168479262/0zguo2VU9oVToWdsgtTk2MyNfV3swDe_fSYZSwfC08ir48XN7yMxJuCSryIycQF-KEeN",	-- Log-out Player
-	deaths = "https://discord.com/api/webhooks/855786601450700801/3K2VFquCtTLKFBvE00D-ocBpSA2m0aTAD02PjLJ7s-CGXeWEUub_-MWF33G98HXgIdst",		-- Player che spara
-	shooting = "https://discord.com/api/webhooks/855786601450700801/3K2VFquCtTLKFBvE00D-ocBpSA2m0aTAD02PjLJ7s-CGXeWEUub_-MWF33G98HXgIdst",	-- Player Morto
+	chat = "DISCORD_WEBHOOK",		-- Chat Message
+	joins = "DISCORD_WEBHOOK",		-- Log-in Player
+	leaving = "DISCORD_WEBHOOK",	-- Log-out Player
+	deaths = "DISCORD_WEBHOOK",		-- Player che spara
+	shooting = "DISCORD_WEBHOOK",	-- Player Morto
 	resources = "DISCORD_WEBHOOK",	-- Risorsa Startata/Stoppata
 }
 
