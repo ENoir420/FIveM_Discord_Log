@@ -2,12 +2,12 @@ Config = {}
 
 Config.AllLogs = true											-- Attiva/Disattiva i logs
 Config.postal = false  											-- se lo setti False, non apparirà il civico di spawn
-Config.username = "Bot Name" 							-- Bot Username
-Config.avatar = "https://placeholder.com/"				-- Bot Avatar
-Config.communtiyName = "Community Name"					-- Nome al top embed
-Config.communtiyLogo = "https://placeholder.com/"		-- Icona al top embed
-Config.FooterText = "2021 ENoir_420"						-- Testo Footer per l' embed
-Config.FooterIcon = "https://placeholder.com/"			-- Icona Footer per l' embed
+Config.username = "Bot Name" 									-- Bot Username
+Config.avatar = "https://placeholder.com/"						-- Bot Avatar
+Config.communtiyName = "Community Name"							-- Nome al top embed
+Config.communtiyLogo = "https://placeholder.com/"				-- Icona al top embed
+Config.FooterText = "2021 ENoir_420"							-- Testo Footer per l' embed
+Config.FooterIcon = "https://placeholder.com/"					-- Icona Footer per l' embed
 
 
 Config.weaponLog = true  			-- setta False per disabilitare i colpi d'arma da fuoco log
