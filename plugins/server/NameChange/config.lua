@@ -1,3 +1,3 @@
 NameChangeConfig = {}
 
-NameChangeConfig.AcePermission = 'ENoir.staff' 
+NameChangeConfig.AcePermission = '[server_name].staff' 
